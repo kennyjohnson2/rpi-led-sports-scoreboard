@@ -37,9 +37,30 @@ def run_scoreboard():
         'mls_fav_team_next_game': SoccerFavTeamNextGameScene('MLS'),
         'mls_standings': SoccerStandingsScene('MLS'),
 
+        # Premier League
         'epl_games': SoccerGamesScene('EPL'),
         'epl_fav_team_next_game': SoccerFavTeamNextGameScene('EPL'),
         'epl_standings': SoccerStandingsScene('EPL'),
+
+        # La Liga
+        'laliga_games': SoccerGamesScene('LL'),
+        'laliga_fav_team_next_game': SoccerFavTeamNextGameScene('LL'),
+        'laliga_standings': SoccerStandingsScene('LL'),
+
+        # Bundesliga
+        'bundesliga_games': SoccerGamesScene('BL'),
+        'bundesliga_fav_team_next_game': SoccerFavTeamNextGameScene('BL'),
+        'bundesliga_standings': SoccerStandingsScene('BL'),
+
+        # Serie A
+        'seriea_games': SoccerGamesScene('SA'),
+        'seriea_fav_team_next_game': SoccerFavTeamNextGameScene('SA'),
+        'seriea_standings': SoccerStandingsScene('SA'),
+
+        # Ligue 1
+        'ligue1_games': SoccerGamesScene('L1'),
+        'ligue1_fav_team_next_game': SoccerFavTeamNextGameScene('L1'),
+        'ligue1_standings': SoccerStandingsScene('L1'),
 
         'concacaf_games': SoccerGamesScene('CONCACAF'),
         'concacaf_fav_team_next_game': SoccerFavTeamNextGameScene('CONCACAF')

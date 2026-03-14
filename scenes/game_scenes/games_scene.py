@@ -1,9 +1,11 @@
 from ..scene import Scene
 from setup.matrix_setup import matrix, matrix_options
 from utils import image_utils
+from data.soccer_data import get_team_logo
 
 from PIL import Image, ImageDraw
 from time import sleep
+from pathlib import Path
 import math
 
 
@@ -11,6 +13,8 @@ class GamesScene(Scene):
     """ Generic game scene, regardless of league/sport. Contains functionality to build score, no game today, etc. images and display them on the matrix.
     This class extends the general Scene class and is extended by those of specific leagues. An object of this class type is never created directly.
     """
+    Soccer_Leagues = ['MLS', 'EPL', 'LL', 'BL', 'SA', 'L1', 'CONCACAF']
+    
     
     def __init__(self):
         """ Creates Image objects to be displayed on the matrix and ImageDraw objects allowing us to add logos, text, etc. to each image.
@@ -150,7 +154,7 @@ class GamesScene(Scene):
         self.draw['centre'].text((16, 1), 'l', font=self.FONTS['sm'], fill=self.COLOURS['white'])
 
         # If game ended in OT, etc. add that to the centre image.
-        if game['league'] not in ['MLS']:
+        if self.LEAGUE not in self.Soccer_Leagues:
             self.add_final_playing_period_to_image(game) # This exists in child classes.
 
         # Add the current score to the centre image, noting if either team scored since previous data pull.
@@ -174,7 +178,7 @@ class GamesScene(Scene):
 
         # Add time to the centre image.
         
-        if self.LEAGUE in ['MLS', 'EPL', 'CONCACAF']:
+        if self.LEAGUE in self.Soccer_Leagues:
             if not game['has_started']:
                 self.draw['centre'].text((0, 8 + row_offset), time_str[0], font=self.FONTS['sm'], fill=self.COLOURS['white'])
                 self.draw['centre'].text((4, 8 + row_offset), time_str[1], font=self.FONTS['sm'], fill=self.COLOURS['white'])
@@ -235,8 +239,14 @@ class GamesScene(Scene):
         """
         
         # Determine the path of the image to load. Standard path or alt logo.
+        
         away_logo_path = f'assets/images/{self.LEAGUE}/teams/{game['away_abrv']}.png' if game['away_abrv'] not in self.alt_logos else f'assets/images/{self.LEAGUE}/teams_alt/{game['away_abrv']}_{self.alt_logos[game['away_abrv']]}.png'
         
+        if not Path(away_logo_path).exists() and self.league in self.Soccer_Leagues:
+            print (f'{game['away_abrv']} logo missing')
+            get_team_logo(game['away_abrv'], self)
+            image_utils.process_in_place(away_logo_path)
+
         # Load, crop, and resize the away team logo.
         away_logo = Image.open(away_logo_path)
         away_logo = image_utils.crop_image(away_logo)
@@ -251,6 +261,11 @@ class GamesScene(Scene):
 
         # Determine the path of the image to load. Standard path or alt logo.
         home_logo_path = f'assets/images/{self.LEAGUE}/teams/{game['home_abrv']}.png' if game['home_abrv'] not in self.alt_logos else f'assets/images/{self.LEAGUE}/teams_alt/{game['home_abrv']}_{self.alt_logos[game['home_abrv']]}.png'
+
+        if not Path(home_logo_path).exists() and self.league in self.Soccer_Leagues:
+            print (f'{game['home_abrv']} logo missing')
+            get_team_logo(game['home_abrv'], self)
+            image_utils.process_in_place(home_logo_path)
 
         # Load, crop, and resize the home team logo.
         home_logo = Image.open(home_logo_path)

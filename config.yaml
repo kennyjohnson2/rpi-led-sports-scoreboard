@@ -5,18 +5,30 @@ scene_order:
   - pwhl_fav_team_next_game
   - mls_fav_team_next_game
   - epl_fav_team_next_game
+  - laliga_fav_team_next_game
+  - bundesliga_fav_team_next_game
+  - seriea_fav_team_next_game
+  - ligue1_fav_team_next_game
   - concacaf_fav_team_next_game
   - nhl_games
   - nba_games
   - pwhl_games
   - mls_games
   - epl_games
+  - laliga_games
+  - bundesliga_games
+  - seriea_games
+  - ligue1_games
   - concacaf_games
   - nhl_standings
   - nba_standings
   - pwhl_standings
   - mls_standings
   - epl_standings
+  - laliga_standings
+  - bundesliga_standings
+  - seriea_standings
+  - ligue1_standings
 
 
 # Note your favourite teams by league. Any number of teams can be specified.
@@ -31,6 +43,14 @@ favourite_teams:
     # - NE # Example
   epl:
     # - EVE # Example
+  ll:
+
+  bl:
+
+  sa:
+
+  l1:
+
   concacaf:
 
 
@@ -46,6 +66,14 @@ alt_logos:
     # NE: 2004 # Example.
   epl:
     # EVE: 2004 # Example.
+  ll:
+
+  bl:
+
+  sa:
+
+  l1:
+
   concacaf:
 
 # Settings for each scene.
@@ -181,7 +209,9 @@ scene_settings:
       highlight_fav_teams: True
       display_for:
         - conference
+        # - league
 
+  # Premier League
   epl:
     games: # epl_games scene.
       transition: 'modern'
@@ -197,12 +227,12 @@ scene_settings:
         show_completed_games_until_rollover_end_time: True
         rollover_end_time_local: '12:00'
 
-    fav_team_next_game: # mls_fav_team_next_game scene.
+    fav_team_next_game: # epl_fav_team_next_game scene.
       transition: 'modern'
       display_duration: 3.5
       display_if_in_progress: False
 
-    standings: # mls_standings scene.
+    standings: # epl_standings scene.
       transition: 'modern'
       splash:
         display_splash: True
@@ -214,6 +244,138 @@ scene_settings:
       display_for:
         - league
   
+  # La Liga
+  ll:
+    games: # ll_games scene.
+      transition: 'modern'
+      splash:
+        display_splash: True
+        splash_display_duration: 2
+      game_display_duration: 3.5
+      score_alerting:
+        score_coloured: true
+        score_fade_animation: true
+      rollover:
+        rollover_start_time_local: '07:00'
+        show_completed_games_until_rollover_end_time: True
+        rollover_end_time_local: '12:00'
+
+    fav_team_next_game: # ll_fav_team_next_game scene.
+      transition: 'modern'
+      display_duration: 3.5
+      display_if_in_progress: False
+
+    standings: # ll_standings scene.
+      transition: 'modern'
+      splash:
+        display_splash: True
+        splash_display_duration: 2
+      scroll:
+        scroll_pause_duration: 1
+        scroll_frame_duration: 0.075
+      highlight_fav_teams: True
+      display_for:
+        - league
+  
+  # Bundesliga
+  bl:
+    games: # bl_games scene.
+      transition: 'modern'
+      splash:
+        display_splash: True
+        splash_display_duration: 2
+      game_display_duration: 3.5
+      score_alerting:
+        score_coloured: true
+        score_fade_animation: true
+      rollover:
+        rollover_start_time_local: '07:00'
+        show_completed_games_until_rollover_end_time: True
+        rollover_end_time_local: '12:00'
+
+    fav_team_next_game: # bl_fav_team_next_game scene.
+      transition: 'modern'
+      display_duration: 3.5
+      display_if_in_progress: False
+
+    standings: # bl_standings scene.
+      transition: 'modern'
+      splash:
+        display_splash: True
+        splash_display_duration: 2
+      scroll:
+        scroll_pause_duration: 1
+        scroll_frame_duration: 0.075
+      highlight_fav_teams: True
+      display_for:
+        - league
+
+  #Serie A
+  sa:
+    games: # sa_games scene.
+      transition: 'modern'
+      splash:
+        display_splash: True
+        splash_display_duration: 2
+      game_display_duration: 3.5
+      score_alerting:
+        score_coloured: true
+        score_fade_animation: true
+      rollover:
+        rollover_start_time_local: '07:00'
+        show_completed_games_until_rollover_end_time: True
+        rollover_end_time_local: '12:00'
+
+    fav_team_next_game: # sa_fav_team_next_game scene.
+      transition: 'modern'
+      display_duration: 3.5
+      display_if_in_progress: False
+
+    standings: # sa_standings scene.
+      transition: 'modern'
+      splash:
+        display_splash: True
+        splash_display_duration: 2
+      scroll:
+        scroll_pause_duration: 1
+        scroll_frame_duration: 0.075
+      highlight_fav_teams: True
+      display_for:
+        - league
+  
+  #Ligue 1
+  l1:
+    games: # l1_games scene.
+      transition: 'modern'
+      splash:
+        display_splash: True
+        splash_display_duration: 2
+      game_display_duration: 3.5
+      score_alerting:
+        score_coloured: true
+        score_fade_animation: true
+      rollover:
+        rollover_start_time_local: '07:00'
+        show_completed_games_until_rollover_end_time: True
+        rollover_end_time_local: '12:00'
+
+    fav_team_next_game: # l1_fav_team_next_game scene.
+      transition: 'modern'
+      display_duration: 3.5
+      display_if_in_progress: False
+
+    standings: # l1_standings scene.
+      transition: 'modern'
+      splash:
+        display_splash: True
+        splash_display_duration: 2
+      scroll:
+        scroll_pause_duration: 1
+        scroll_frame_duration: 0.075
+      highlight_fav_teams: True
+      display_for:
+        - league
+
   concacaf:
     games: # concacaf_games scene.
       transition: 'modern'

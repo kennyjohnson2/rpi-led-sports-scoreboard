@@ -1,11 +1,25 @@
 from setup.session_setup import session
 from datetime import datetime as dt
 from datetime import timezone as tz
+from pathlib import Path
 
 #League mapping [API_League_Key, Event_IDs, playoff_cutoff_hard, playoff_cutoff_soft, relegation_cutoff]
+#Endpoint to find league info - https://sports.core.api.espn.com/v2/sports/soccer/leagues/{league}/
+"""
+LL - La Liga
+BL - Bundesliga
+SA - Serie A
+L1 - Ligue 1
+
+"""
+
 league_mapping = {
         'MLS': ['usa.1', list(range(13830, 13845)) + [13846], 9, 7, 0],
         'EPL': ['eng.1', [13481], 5, 4, 17],
+        'LL':['esp.1', [13561], 5, 4, 17],
+        'BL':['ger.1', [13547], 5, 4, 16],
+        'SA':['ita.1', [13447], 5, 4, 17],
+        'L1':['fra.1', [13546], 5, 4, 16],
         'CONCACAF': ['concacaf.champions', list(range(13890, 13895)), 0, 0, 0]
     }
 
@@ -68,16 +82,9 @@ def get_next_game(team, self):
     # Note the current datetime.
     cur_datetime = dt.today().astimezone()
     cur_date = dt.today().astimezone().date()
-
-    #Get Team ID
-    url = f'https://site.api.espn.com/apis/site/v2/sports/soccer/{league_mapping[self.LEAGUE][0]}/teams'
-    teams_response = session.get(url=url)
-    teams_json = teams_response.json()['sports'][0]['leagues'][0]['teams']
-
-    for league_team in teams_json:
-        if league_team['team']['abbreviation'] == team:
-            team_id = league_team['team']['id']
     
+    team_id = get_team_id(team, self)
+
     # Call the ESPN schedule API for the team specified and store the JSON results.
     url = f'https://site.api.espn.com/apis/site/v2/sports/soccer/{league_mapping[self.LEAGUE][0]}/teams/{team_id}'
     next_game_response = session.get(url=url)
@@ -99,6 +106,35 @@ def get_next_game(team, self):
     
     # If no next game found, return None.
     return None
+
+def get_team_id(team, self):
+    url = f'https://site.api.espn.com/apis/site/v2/sports/soccer/{league_mapping[self.LEAGUE][0]}/teams'
+    teams_response = session.get(url=url)
+    teams_json = teams_response.json()['sports'][0]['leagues'][0]['teams']
+
+    for league_team in teams_json:
+        if league_team['team']['abbreviation'] == team:
+            team_id = league_team['team']['id']
+    
+    return team_id
+
+def get_team_logo(team, self):
+    output_path = f'assets/images/{self.LEAGUE}/teams/{team}.png'
+    team_id = get_team_id(team, self)
+    url = f'https://site.api.espn.com/apis/site/v2/sports/soccer/{league_mapping[self.LEAGUE][0]}/teams/{team_id}'
+    team_response = session.get(url=url)
+    team_json = team_response.json()
+
+    
+    if len(team_json['team']['logos']) > 1:
+        logo_url = team_json['team']['logos'][1]['href']
+    else:
+        logo_url = team_json['team']['logos'][0]['href']
+    
+    logo_response = session.get(url=logo_url)
+    if logo_response.status_code == 200:
+        Path(output_path).write_bytes(logo_response.content)
+
 
 def get_standings(self):
     """ Loads current NBA standings by division, conference, and overall league.

@@ -15,7 +15,7 @@ services:
       - type: bind
         source: ./assets
         target: /app/assets
-        read_only: true
+        read_only: false
       # Binding localtime to sync RPi and container timezones.
       - type: bind
         source: /etc/localtime
@@ -35,4 +35,9 @@ services:
       - type: bind
         source: ./scenes
         target: /app/scenes
+        read_only: true
+      #Binding for use with existing image
+      - type: bind
+        source: ./utils
+        target: /app/utils
         read_only: true
