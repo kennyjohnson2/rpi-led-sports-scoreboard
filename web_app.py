@@ -48,7 +48,7 @@ def format_label(scene_string):
     # Mapping of technical endings to human-readable labels
     label_map = {
         "next game": "Favorite Team Next Game",
-        "games": "Schedule",
+        "games": "Games",
         "standings": "Standings",
         "next race": "Next Race",
         "driver standings": "Driver Standings",
