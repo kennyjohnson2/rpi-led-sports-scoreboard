@@ -6,6 +6,7 @@ Hardware requirements, installation instructions (with and without Docker), and 
 
 ## Credits
 Forked from [Gidger rpi led sports scoreboard](https://github.com/gidger/rpi-led-sports-scoreboard)
+
 F1 pulled from [MAX-POW3R fork of Gidger](https://github.com/MAX-P0W3R/rpi-led-nhl-scoreboard) with some adjustments to make standings show the same as other sports.
 
 **Leagues Implemented:**
